@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Cameras for My Commute</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .camera-card {
+            margin-bottom: 20px;
+        }
+        .camera-thumbnail {
+            width: 100%;
+            height: auto;
+        }
+        .video-frame {
+            width: 100%;
+            height: auto;
+        }
+        .camera-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 15px;
+            margin-top:30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Traffic Cameras for My Commute</h1>
+        
+        <!-- Camera Grid -->
+        <div class="camera-grid" id="camera-list">
+            <!-- Camera feeds will be injected here by JS -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Example camera feed data (replace with actual API or data source)
+        const cameraFeeds = [
+            { 
+                name: "44 at Big Bend", 
+                imgSrc: "https://sfs02-traveler.modot.mo.gov/rtplive/MODOT_CAM_239/playlist.m3u8", 
+                url: "https://sfs02-traveler.modot.mo.gov/rtplive/MODOT_CAM_239/playlist.m3u8", 
+                type: "video" // Or "video" for live streams
+		
+            },
+            { 
+                name: "44 at Laclede Station", 
+                imgSrc: "https://sfs03-traveler.modot.mo.gov/rtplive/MODOT_CAM_027/playlist.m3u8", 
+                url: "https://sfs03-traveler.modot.mo.gov/rtplive/MODOT_CAM_027/playlist.m3u8", 
+                type: "video" // Or "video" for live streams
+		
+            },
+            { 
+                name: "44 at Jamieson", 
+                imgSrc: "https://sfs01-traveler.modot.mo.gov/rtplive/MODOT_CAM_016/playlist.m3u8", 
+                url: "https://sfs01-traveler.modot.mo.gov/rtplive/MODOT_CAM_016/playlist.m3u8", 
+                type: "video" // Or "video" for live streams
+		
+            },
+   	    { 
+                name: "44 at Kingshighway", 
+                imgSrc: "https://sfs02-traveler.modot.mo.gov/rtplive/MODOT_CAM_029/playlist.m3u8", 
+                url: "https://sfs02-traveler.modot.mo.gov/rtplive/MODOT_CAM_029/playlist.m3u8", 
+                type: "video" // Or "video" for live streams
+		
+            },
+	    { 
+                name: "44 at Grand", 
+                imgSrc: "https://sfs03-traveler.modot.mo.gov/rtplive/MODOT_CAM_030/playlist.m3u8", 
+                url: "https://sfs03-traveler.modot.mo.gov/rtplive/MODOT_CAM_030/playlist.m3u8", 
+                type: "video" // Or "video" for live streams
+		
+            },
+	    { 
+                name: "44 at Jefferson", 
+                imgSrc: "https://sfs03-traveler.modot.mo.gov/rtplive/MODOT_CAM_018/playlist.m3u8", 
+                url: "https://sfs03-traveler.modot.mo.gov/rtplive/MODOT_CAM_018/playlist.m3u8", 
+                type: "video" // Or "video" for live streams
+		
+            },
+
+            
+        ];
+
+        // Render multiple camera feeds dynamically
+        const cameraList = document.getElementById('camera-list');
+        cameraFeeds.forEach(camera => {
+            const cameraCard = document.createElement('div');
+            cameraCard.classList.add('camera-card');
+
+            let cameraContent = '';
+
+            if (camera.type === 'image') {
+                cameraContent = `
+                    <div class="card">
+                        <img class="card-img-top camera-thumbnail" src="${camera.imgSrc}" alt="${camera.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${camera.name}</h5>
+                            <a href="${camera.url}" class="btn btn-primary" target="_blank">View Camera</a>
+                        </div>
+                    </div>
+                `;
+            } else if (camera.type === 'video') {
+                cameraContent = `
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${camera.name}</h5>
+                            <video class="video-frame" mute autoplay>
+                                <source src="${camera.url}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <a href="${camera.url}" class="btn btn-primary mt-2" target="_blank">View Camera</a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            cameraCard.innerHTML = cameraContent;
+            cameraList.appendChild(cameraCard);
+        });
+    </script>
+</body>
+</html>
